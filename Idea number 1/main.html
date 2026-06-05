@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tufts University — Sign In</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Proxima+Nova:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --blue-dark:    #002E6D;
+      --blue-mid:     #1A5EA8;
+      --blue-digital: #3172AE;
+      --blue-hover:   #255E94;
+      --brown:        #5E4B3C;
+      --white:        #FFFFFF;
+      --off-white:    #F7F8FA;
+      --gray-border:  #D4D8DE;
+      --gray-text:    #2C2C2C;
+      --muted:        #6B7280;
+      --error:        #B91C1C;
+      --focus-ring:   rgba(49,114,174,0.45);
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: 'Proxima Nova', Arial, sans-serif;
+      background: var(--off-white);
+      color: var(--gray-text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ───────────────────────────────────────
+       LAYOUT
+    ─────────────────────────────────────── */
+    .page {
+      flex: 1;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── Brand panel (left) ── */
+    .brand-panel {
+      flex: 0 0 42%;
+      background: var(--blue-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle geometric accent */
+    .brand-panel::before {
+      content: '';
+      position: absolute;
+      bottom: -80px;
+      right: -80px;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+      pointer-events: none;
+    }
+
+    .brand-panel::after {
+      content: '';
+      position: absolute;
+      top: -60px;
+      left: -60px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.03);
+      pointer-events: none;
+    }
+
+    .brand-logo {
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand-logo img {
+      width: 200px;
+      max-width: 100%;
+      filter: brightness(0) invert(1);
+      display: block;
+    }
+
+    .brand-tagline {
+      margin-top: 28px;
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 0.04em;
+      text-align: center;
+      line-height: 1.5;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Form panel (right) ── */
+    .form-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 40px;
+      background: var(--white);
+    }
+
+    .form-inner {
+      width: 100%;
+      max-width: 360px;
+    }
+
+    /* ── Heading ── */
+    .form-heading {
+      margin-bottom: 28px;
+    }
+
+    .form-heading h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--blue-dark);
+      letter-spacing: -0.01em;
+    }
+
+    .form-heading p {
+      margin-top: 4px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* ── Error banner ── */
+    .error-banner {
+      display: none;
+      align-items: flex-start;
+      gap: 10px;
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+      border-radius: 6px;
+      padding: 12px 14px;
+      margin-bottom: 20px;
+      font-size: 0.875rem;
+      color: var(--error);
+    }
+
+    .error-banner.visible {
+      display: flex;
+    }
+
+    .error-icon {
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      margin-top: 1px;
+    }
+
+    /* ── Form fields ── */
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--gray-text);
+      margin-bottom: 6px;
+      letter-spacing: 0.01em;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 11px 14px;
+      font-family: inherit;
+      font-size: 0.975rem;
+      color: var(--gray-text);
+      background: var(--white);
+      border: 1.5px solid var(--gray-border);
+      border-radius: 6px;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      border-color: var(--blue-digital);
+      box-shadow: 0 0 0 3px var(--focus-ring);
+    }
+
+    /* Password toggle */
+    .toggle-pw {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 2px 4px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+    }
+
+    .toggle-pw:focus-visible {
+      outline: 2px solid var(--blue-digital);
+      outline-offset: 2px;
+      border-radius: 3px;
+    }
+
+    .toggle-pw svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    input[type="password"] {
+      padding-right: 42px;
+    }
+
+    /* ── Sign in button ── */
+    .btn-signin {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      font-family: inherit;
+      font-size: 0.975rem;
+      font-weight: 600;
+      color: var(--white);
+      background: var(--blue-digital);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      transition: background 0.15s, transform 0.1s;
+      margin-top: 6px;
+    }
+
+    .btn-signin:hover {
+      background: var(--blue-hover);
+    }
+
+    .btn-signin:active {
+      transform: scale(0.99);
+    }
+
+    .btn-signin:focus-visible {
+      outline: 3px solid var(--blue-digital);
+      outline-offset: 2px;
+    }
+
+    /* ── Forgot link ── */
+    .forgot {
+      display: block;
+      text-align: center;
+      margin-top: 16px;
+      font-size: 0.875rem;
+      color: var(--blue-digital);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .forgot:hover {
+      color: var(--blue-hover);
+      text-decoration: underline;
+    }
+
+    .forgot:focus-visible {
+      outline: 2px solid var(--blue-digital);
+      outline-offset: 2px;
+      border-radius: 3px;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      border: none;
+      border-top: 1px solid #EAEDF0;
+      margin: 22px 0;
+    }
+
+    /* ── Security notice ── */
+    .security-notice {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .security-notice strong {
+      color: var(--gray-text);
+      font-weight: 600;
+    }
+
+    /* ───────────────────────────────────────
+       FOOTER
+    ─────────────────────────────────────── */
+    footer {
+      background: var(--blue-dark);
+      padding: 16px 40px;
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .footer-item {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .footer-item a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+    }
+
+    .footer-item a:hover {
+      color: var(--white);
+      text-decoration: underline;
+    }
+
+    .footer-sep {
+      color: rgba(255,255,255,0.2);
+    }
+
+    /* ───────────────────────────────────────
+       MOBILE
+    ─────────────────────────────────────── */
+    @media (max-width: 680px) {
+      .page {
+        flex-direction: column;
+        min-height: auto;
+      }
+
+      .brand-panel {
+        flex: none;
+        padding: 28px 24px 24px;
+        flex-direction: row;
+        justify-content: center;
+        gap: 0;
+      }
+
+      .brand-panel::before,
+      .brand-panel::after {
+        display: none;
+      }
+
+      .brand-logo img {
+        width: 140px;
+      }
+
+      .brand-tagline {
+        display: none;
+      }
+
+      .form-panel {
+        padding: 32px 24px 28px;
+        justify-content: flex-start;
+      }
+
+      footer {
+        padding: 14px 20px;
+        gap: 10px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page">
+
+    <!-- Brand panel -->
+    <aside class="brand-panel" aria-hidden="true">
+      <div class="brand-logo">
+        <img src="Tufts_univ_blue_small usage final.png" alt="Tufts University" />
+      </div>
+      <p class="brand-tagline">Single Sign-On</p>
+    </aside>
+
+    <!-- Form panel -->
+    <main class="form-panel">
+      <div class="form-inner">
+
+        <div class="form-heading">
+          <h1>Sign in</h1>
+          <p>Use your Tufts credentials to continue</p>
+        </div>
+
+        <div class="error-banner" role="alert" id="error-banner">
+          <svg class="error-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
+          </svg>
+          <span id="error-text">Incorrect username or password. Please try again.</span>
+        </div>
+
+        <form id="login-form" novalidate>
+          <div class="form-group">
+            <label for="username">Tufts Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              autocomplete="username"
+              spellcheck="false"
+              autocapitalize="none"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="password">Tufts Password</label>
+            <div class="input-wrap">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                autocomplete="current-password"
+                required
+              />
+              <button type="button" class="toggle-pw" id="toggle-pw" aria-label="Show password">
+                <!-- eye icon -->
+                <svg id="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+                <!-- eye-off icon (hidden initially) -->
+                <svg id="icon-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+                  <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/>
+                  <path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/>
+                  <line x1="1" y1="1" x2="23" y2="23"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-signin">Sign In</button>
+        </form>
+
+        <a href="#" class="forgot">Forgot your Tufts username or password?</a>
+
+        <hr class="divider" />
+
+        <p class="security-notice">
+          For security reasons, please <strong>quit your browser</strong> when finished
+          using services that require single sign-on. Do not bookmark this page —
+          navigate to the service you want to use in order to sign in.
+        </p>
+
+      </div>
+    </main>
+
+  </div>
+
+  <footer>
+    <span class="footer-item">
+      Powered by <a href="#">Shibboleth</a>
+    </span>
+    <span class="footer-sep" aria-hidden="true">·</span>
+    <span class="footer-item">
+      Need help? Call <a href="tel:+16176273376">617-627-3376</a> or email <a href="mailto:it@tufts.edu">it@tufts.edu</a>
+    </span>
+    <span class="footer-sep" aria-hidden="true">·</span>
+    <span class="footer-item">
+      <a href="#">Information Stewardship Policy</a>
+    </span>
+  </footer>
+
+  <script>
+    // Password visibility toggle
+    const pwInput   = document.getElementById('password');
+    const toggleBtn = document.getElementById('toggle-pw');
+    const iconEye   = document.getElementById('icon-eye');
+    const iconOff   = document.getElementById('icon-eye-off');
+
+    toggleBtn.addEventListener('click', () => {
+      const show = pwInput.type === 'password';
+      pwInput.type = show ? 'text' : 'password';
+      iconEye.style.display = show ? 'none'  : '';
+      iconOff.style.display = show ? ''      : 'none';
+      toggleBtn.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+    });
+
+    // Form validation
+    document.getElementById('login-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const username  = document.getElementById('username').value.trim();
+      const password  = document.getElementById('password').value;
+      const banner    = document.getElementById('error-banner');
+      const errorText = document.getElementById('error-text');
+
+      if (!username || !password) {
+        errorText.textContent = 'Please enter both your username and password.';
+        banner.classList.add('visible');
+        (!username
+          ? document.getElementById('username')
+          : document.getElementById('password')
+        ).focus();
+        return;
+      }
+
+      banner.classList.remove('visible');
+      // SSO authentication logic goes here
+    });
+  </script>
+
+</body>
+</html>
