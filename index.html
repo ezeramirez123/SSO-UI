@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tufts SSO — Design Concepts</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            tufts: {
+              dark: '#002E6D',
+              digital: '#3172AE',
+              hover: '#255E94',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-50 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-tufts-dark shadow-md">
+    <div class="max-w-5xl mx-auto px-6 py-5 flex items-center gap-4">
+      <img
+        src="Tufts_univ_blue_small usage final.png"
+        alt="Tufts University"
+        class="h-9 filter brightness-0 invert"
+      />
+      <div class="border-l border-white/30 pl-4">
+        <p class="text-white/60 text-xs uppercase tracking-widest leading-none mb-0.5">SSO Project</p>
+        <p class="text-white font-semibold text-sm leading-none">Design Concepts</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="max-w-5xl mx-auto px-6 py-12">
+
+    <div class="mb-10">
+      <h1 class="text-2xl font-bold text-tufts-dark">Login Page Prototypes</h1>
+      <p class="text-slate-500 mt-1 text-sm">7 design directions for the Tufts single sign-on experience. Click any card to open the prototype.</p>
+    </div>
+
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+
+      <!-- Idea 1 -->
+      <a href="Idea%20number%201/main.html" target="_blank"
+         class="group bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-tufts-digital transition-all duration-200 overflow-hidden flex flex-col">
+        <div class="h-2 bg-tufts-dark"></div>
+        <div class="p-5 flex flex-col flex-1">
+          <div class="flex items-start justify-between mb-3">
+            <span class="text-xs font-semibold uppercase tracking-widest text-tufts-digital">Idea 1</span>
+            <span class="text-xs text-slate-400 bg-slate-100 rounded-full px-2 py-0.5">Plain CSS</span>
+          </div>
+          <h2 class="text-base font-semibold text-slate-800 mb-1">Split Panel</h2>
+          <p class="text-sm text-slate-500 flex-1">Dark blue brand panel on the left, white form on the right. Stacks on mobile and portrait tablet.</p>
+          <div class="mt-4 flex items-center text-tufts-digital text-sm font-medium group-hover:gap-2 transition-all">
+            Open prototype
+            <svg class="w-4 h-4 ml-1 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </a>
+
+      <!-- Idea 2 -->
+      <a href="Idea%20number%202/main.html" target="_blank"
+         class="group bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-tufts-digital transition-all duration-200 overflow-hidden flex flex-col">
+        <div class="h-2 bg-tufts-dark"></div>
+        <div class="p-5 flex flex-col flex-1">
+          <div class="flex items-start justify-between mb-3">
+            <span class="text-xs font-semibold uppercase tracking-widest text-tufts-digital">Idea 2</span>
+            <span class="text-xs text-slate-400 bg-slate-100 rounded-full px-2 py-0.5">Plain CSS</span>
+          </div>
+          <h2 class="text-base font-semibold text-slate-800 mb-1">Centered Island</h2>
+          <p class="text-sm text-slate-500 flex-1">White card floating on a dark blue radial gradient background. Closest to the current Tufts SSO layout.</p>
+          <div class="mt-4 flex items-center text-tufts-digital text-sm font-medium">
+            Open prototype
+            <svg class="w-4 h-4 ml-1 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </a>
+
+      <!-- Idea 3 -->
+      <a href="Idea%20number%203/main.html" target="_blank"
+         class="group bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-tufts-digital transition-all duration-200 overflow-hidden flex flex-col">
+        <div class="h-2 bg-tufts-dark"></div>
+        <div class="p-5 flex flex-col flex-1">
+          <div class="flex items-start justify-between mb-3">
+            <span class="text-xs font-semibold uppercase tracking-widest text-tufts-digital">Idea 3</span>
+            <span class="text-xs text-slate-400 bg-slate-100 rounded-full px-2 py-0.5">Plain CSS</span>
+          </div>
+          <h2 class="text-base font-semibold text-slate-800 mb-1">Minimal Card</h2>
+          <p class="text-sm text-slate-500 flex-1">Light blue-tinted background, plain white card. No decorative elements — spacing and typography do the work.</p>
+          <div class="mt-4 flex items-center text-tufts-digital text-sm font-medium">
+            Open prototype
+            <svg class="w-4 h-4 ml-1 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </a>
+
+      <!-- Idea 4 -->
+      <a href="Idea%20number%204/main.html" target="_blank"
+         class="group bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-tufts-digital transition-all duration-200 overflow-hidden flex flex-col">
+        <div class="h-2 bg-gradient-to-r from-tufts-dark to-tufts-digital"></div>
+        <div class="p-5 flex flex-col flex-1">
+          <div class="flex items-start justify-between mb-3">
+            <span class="text-xs font-semibold uppercase tracking-widest text-tufts-digital">Idea 4</span>
+            <span class="text-xs text-slate-400 bg-slate-100 rounded-full px-2 py-0.5">Tailwind + Alpine</span>
+          </div>
+          <h2 class="text-base font-semibold text-slate-800 mb-1">Light + Interactive</h2>
+          <p class="text-sm text-slate-500 flex-1">Centered card on slate. Alpine.js adds password show/hide, animated error banner, and submit loading state.</p>
+          <div class="mt-4 flex items-center text-tufts-digital text-sm font-medium">
+            Open prototype
+            <svg class="w-4 h-4 ml-1 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </a>
+
+      <!-- Idea 5 -->
+      <a href="Idea%20number%205/main.html" target="_blank"
+         class="group bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-tufts-digital transition-all duration-200 overflow-hidden flex flex-col">
+        <div class="h-2 bg-gradient-to-r from-tufts-dark to-tufts-digital"></div>
+        <div class="p-5 flex flex-col flex-1">
+          <div class="flex items-start justify-between mb-3">
+            <span class="text-xs font-semibold uppercase tracking-widest text-tufts-digital">Idea 5</span>
+            <span class="text-xs text-slate-400 bg-slate-100 rounded-full px-2 py-0.5">Tailwind + Alpine</span>
+          </div>
+          <h2 class="text-base font-semibold text-slate-800 mb-1">Dark Theme</h2>
+          <p class="text-sm text-slate-500 flex-1">Full dark blue page with a white card and frosted glass help panel. Logo inverted to white.</p>
+          <div class="mt-4 flex items-center text-tufts-digital text-sm font-medium">
+            Open prototype
+            <svg class="w-4 h-4 ml-1 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </a>
+
+      <!-- Idea 6 -->
+      <a href="Idea%20number%206/main.html" target="_blank"
+         class="group bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-tufts-digital transition-all duration-200 overflow-hidden flex flex-col">
+        <div class="h-2 bg-gradient-to-r from-tufts-dark to-tufts-digital"></div>
+        <div class="p-5 flex flex-col flex-1">
+          <div class="flex items-start justify-between mb-3">
+            <span class="text-xs font-semibold uppercase tracking-widest text-tufts-digital">Idea 6</span>
+            <span class="text-xs text-slate-400 bg-slate-100 rounded-full px-2 py-0.5">Tailwind + Alpine</span>
+          </div>
+          <h2 class="text-base font-semibold text-slate-800 mb-1">Split, No Card</h2>
+          <p class="text-sm text-slate-500 flex-1">Full-screen split with no card wrapper. Form sits directly on white. Service indicator slot included.</p>
+          <div class="mt-4 flex items-center text-tufts-digital text-sm font-medium">
+            Open prototype
+            <svg class="w-4 h-4 ml-1 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </a>
+
+      <!-- Idea 7 -->
+      <a href="Idea%20number%207/main.html" target="_blank"
+         class="group bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-tufts-digital transition-all duration-200 overflow-hidden flex flex-col sm:col-span-2 lg:col-span-1">
+        <div class="h-2 bg-gradient-to-r from-tufts-digital to-tufts-dark"></div>
+        <div class="p-5 flex flex-col flex-1">
+          <div class="flex items-start justify-between mb-3">
+            <span class="text-xs font-semibold uppercase tracking-widest text-tufts-digital">Idea 7</span>
+            <span class="text-xs text-white bg-tufts-dark rounded-full px-2 py-0.5">Recommended</span>
+          </div>
+          <h2 class="text-base font-semibold text-slate-800 mb-1">Two-Step Flow</h2>
+          <p class="text-sm text-slate-500 flex-1">Progressive disclosure: username first, then password. Google/Microsoft-style. Service indicator persists across both steps.</p>
+          <div class="mt-4 flex items-center text-tufts-digital text-sm font-medium">
+            Open prototype
+            <svg class="w-4 h-4 ml-1 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="max-w-5xl mx-auto px-6 py-8 mt-4 border-t border-slate-200">
+    <p class="text-xs text-slate-400 text-center">Tufts University — IAM / SSO Design Explorations &nbsp;·&nbsp; All prototypes are static HTML files, no build step required.</p>
+  </footer>
+
+</body>
+</html>
