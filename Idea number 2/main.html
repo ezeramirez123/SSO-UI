@@ -16,134 +16,109 @@
 
     :root {
       --blue-dark:    #002E6D;
-      --blue-mid:     #1A5EA8;
+      --blue-mid:     #1554A0;
       --blue-digital: #3172AE;
       --blue-hover:   #255E94;
-      --brown:        #5E4B3C;
       --white:        #FFFFFF;
-      --off-white:    #F7F8FA;
       --gray-border:  #D4D8DE;
       --gray-text:    #2C2C2C;
       --muted:        #6B7280;
       --error:        #B91C1C;
-      --focus-ring:   rgba(49,114,174,0.45);
-    }
-
-    html, body {
-      height: 100%;
+      --focus-ring:   rgba(49,114,174,0.4);
     }
 
     body {
       font-family: 'Proxima Nova', Arial, sans-serif;
-      background: var(--off-white);
-      color: var(--gray-text);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      /* deep radial: lighter centre fading to near-black edges */
+      background:
+        radial-gradient(ellipse 80% 70% at 50% 40%, #1A5299 0%, #002E6D 60%, #001A42 100%);
+      background-attachment: fixed;
+    }
+
+    /* ── Subtle background grid ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
     }
 
     /* ───────────────────────────────────────
        LAYOUT
     ─────────────────────────────────────── */
     .page {
+      position: relative;
+      z-index: 1;
       flex: 1;
-      display: flex;
-      min-height: 100vh;
-    }
-
-    /* ── Brand panel (left) ── */
-    .brand-panel {
-      flex: 0 0 42%;
-      background: var(--blue-dark);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 48px 40px;
-      position: relative;
-      overflow: hidden;
+      padding: 40px 16px;
+      gap: 0;
     }
 
-    /* Subtle geometric accent */
-    .brand-panel::before {
-      content: '';
-      position: absolute;
-      bottom: -80px;
-      right: -80px;
-      width: 320px;
-      height: 320px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.04);
-      pointer-events: none;
+    /* ── Logo above card ── */
+    .logo-above {
+      margin-bottom: 24px;
+      text-align: center;
     }
 
-    .brand-panel::after {
-      content: '';
-      position: absolute;
-      top: -60px;
-      left: -60px;
-      width: 220px;
-      height: 220px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.03);
-      pointer-events: none;
-    }
-
-    .brand-logo {
-      position: relative;
-      z-index: 1;
-    }
-
-    .brand-logo img {
-      width: 200px;
+    .logo-above img {
+      width: 180px;
       max-width: 100%;
       filter: brightness(0) invert(1);
       display: block;
+      margin: 0 auto;
     }
 
-    .brand-tagline {
-      margin-top: 28px;
-      font-size: 1rem;
-      font-weight: 300;
-      color: rgba(255,255,255,0.65);
-      letter-spacing: 0.04em;
-      text-align: center;
-      line-height: 1.5;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ── Form panel (right) ── */
-    .form-panel {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 48px 40px;
-      background: var(--white);
-    }
-
-    .form-inner {
+    /* ── Card ── */
+    .card {
       width: 100%;
-      max-width: 360px;
+      max-width: 420px;
+      background: var(--white);
+      border-radius: 10px;
+      box-shadow:
+        0 2px 4px rgba(0,0,0,0.12),
+        0 8px 32px rgba(0,0,0,0.28),
+        0 0 0 1px rgba(255,255,255,0.06);
+      overflow: hidden;
+    }
+
+    /* Coloured top accent */
+    .card-accent {
+      height: 4px;
+      background: linear-gradient(90deg, var(--blue-digital) 0%, #5AA3D8 100%);
+    }
+
+    .card-body {
+      padding: 32px 36px 28px;
     }
 
     /* ── Heading ── */
-    .form-heading {
-      margin-bottom: 28px;
+    .card-heading {
+      margin-bottom: 24px;
+      text-align: center;
     }
 
-    .form-heading h1 {
-      font-size: 1.5rem;
+    .card-heading h1 {
+      font-size: 1.375rem;
       font-weight: 700;
       color: var(--blue-dark);
       letter-spacing: -0.01em;
     }
 
-    .form-heading p {
-      margin-top: 4px;
-      font-size: 0.9rem;
+    .card-heading p {
+      margin-top: 5px;
+      font-size: 0.875rem;
       color: var(--muted);
     }
 
@@ -151,13 +126,13 @@
     .error-banner {
       display: none;
       align-items: flex-start;
-      gap: 10px;
+      gap: 9px;
       background: #FEF2F2;
       border: 1px solid #FECACA;
       border-radius: 6px;
-      padding: 12px 14px;
-      margin-bottom: 20px;
-      font-size: 0.875rem;
+      padding: 11px 13px;
+      margin-bottom: 18px;
+      font-size: 0.85rem;
       color: var(--error);
     }
 
@@ -165,24 +140,24 @@
       display: flex;
     }
 
-    .error-icon {
+    .error-banner svg {
       flex-shrink: 0;
-      width: 16px;
-      height: 16px;
+      width: 15px;
+      height: 15px;
       margin-top: 1px;
     }
 
     /* ── Form fields ── */
     .form-group {
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
 
     label {
       display: block;
-      font-size: 0.85rem;
+      font-size: 0.83rem;
       font-weight: 600;
       color: var(--gray-text);
-      margin-bottom: 6px;
+      margin-bottom: 5px;
       letter-spacing: 0.01em;
     }
 
@@ -193,9 +168,9 @@
     input[type="text"],
     input[type="password"] {
       width: 100%;
-      padding: 11px 14px;
+      padding: 10px 13px;
       font-family: inherit;
-      font-size: 0.975rem;
+      font-size: 0.95rem;
       color: var(--gray-text);
       background: var(--white);
       border: 1.5px solid var(--gray-border);
@@ -212,19 +187,29 @@
       box-shadow: 0 0 0 3px var(--focus-ring);
     }
 
+    input[type="password"] {
+      padding-right: 42px;
+    }
+
     /* Password toggle */
     .toggle-pw {
       position: absolute;
-      right: 12px;
+      right: 11px;
       top: 50%;
       transform: translateY(-50%);
       background: none;
       border: none;
       cursor: pointer;
-      padding: 2px 4px;
+      padding: 3px;
       color: var(--muted);
       display: flex;
       align-items: center;
+      line-height: 0;
+    }
+
+    .toggle-pw svg {
+      width: 17px;
+      height: 17px;
     }
 
     .toggle-pw:focus-visible {
@@ -233,20 +218,11 @@
       border-radius: 3px;
     }
 
-    .toggle-pw svg {
-      width: 18px;
-      height: 18px;
-    }
-
-    input[type="password"] {
-      padding-right: 42px;
-    }
-
-    /* ── Sign in button ── */
+    /* ── Button ── */
     .btn-signin {
       display: block;
       width: 100%;
-      padding: 12px;
+      padding: 11px;
       font-family: inherit;
       font-size: 0.975rem;
       font-weight: 600;
@@ -257,38 +233,28 @@
       cursor: pointer;
       letter-spacing: 0.02em;
       transition: background 0.15s, transform 0.1s;
-      margin-top: 6px;
+      margin-top: 4px;
     }
 
-    .btn-signin:hover {
-      background: var(--blue-hover);
-    }
-
-    .btn-signin:active {
-      transform: scale(0.99);
-    }
-
+    .btn-signin:hover  { background: var(--blue-hover); }
+    .btn-signin:active { transform: scale(0.99); }
     .btn-signin:focus-visible {
       outline: 3px solid var(--blue-digital);
       outline-offset: 2px;
     }
 
-    /* ── Forgot link ── */
+    /* ── Links ── */
     .forgot {
       display: block;
       text-align: center;
-      margin-top: 16px;
-      font-size: 0.875rem;
+      margin-top: 14px;
+      font-size: 0.855rem;
       color: var(--blue-digital);
       text-decoration: none;
       font-weight: 500;
     }
 
-    .forgot:hover {
-      color: var(--blue-hover);
-      text-decoration: underline;
-    }
-
+    .forgot:hover { color: var(--blue-hover); text-decoration: underline; }
     .forgot:focus-visible {
       outline: 2px solid var(--blue-digital);
       outline-offset: 2px;
@@ -299,97 +265,85 @@
     .divider {
       border: none;
       border-top: 1px solid #EAEDF0;
-      margin: 22px 0;
+      margin: 20px 0;
     }
 
     /* ── Security notice ── */
     .security-notice {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       color: var(--muted);
       line-height: 1.6;
       text-align: center;
     }
 
     .security-notice strong {
-      color: var(--gray-text);
+      color: #444;
       font-weight: 600;
     }
 
-    /* ───────────────────────────────────────
-       FOOTER
-    ─────────────────────────────────────── */
-    footer {
-      background: var(--blue-dark);
-      padding: 16px 40px;
+    /* ── Card footer ── */
+    .card-footer {
+      border-top: 1px solid #EAEDF0;
+      padding: 14px 36px;
       display: flex;
-      gap: 32px;
       justify-content: center;
+      gap: 20px;
       flex-wrap: wrap;
-      align-items: center;
+      background: #FAFBFC;
     }
 
-    .footer-item {
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.6);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .footer-item a {
-      color: rgba(255,255,255,0.75);
+    .card-footer a {
+      font-size: 0.775rem;
+      color: var(--muted);
       text-decoration: none;
     }
 
-    .footer-item a:hover {
+    .card-footer a:hover {
+      color: var(--blue-digital);
+      text-decoration: underline;
+    }
+
+    .card-footer .sep {
+      color: var(--gray-border);
+      font-size: 0.775rem;
+    }
+
+    /* ── Below-card help ── */
+    .below-card {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .below-card p {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.55);
+    }
+
+    .below-card a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+    }
+
+    .below-card a:hover {
       color: var(--white);
       text-decoration: underline;
     }
 
-    .footer-sep {
-      color: rgba(255,255,255,0.2);
-    }
-
     /* ───────────────────────────────────────
-       MOBILE
+       RESPONSIVE
     ─────────────────────────────────────── */
-    @media (max-width: 900px) {
-      .page {
-        flex-direction: column;
-        min-height: auto;
+    @media (max-width: 500px) {
+      .card-body {
+        padding: 24px 22px 20px;
       }
 
-      .brand-panel {
-        flex: none;
-        padding: 28px 24px 24px;
-        flex-direction: row;
-        justify-content: center;
-        gap: 0;
+      .card-footer {
+        padding: 12px 22px;
+        gap: 12px;
       }
 
-      .brand-panel::before,
-      .brand-panel::after {
-        display: none;
-      }
-
-      .brand-logo img {
-        width: 140px;
-      }
-
-      .brand-tagline {
-        display: none;
-      }
-
-      .form-panel {
-        padding: 32px 24px 28px;
-        justify-content: flex-start;
-      }
-
-      footer {
-        padding: 14px 20px;
-        gap: 10px;
-        flex-direction: column;
-        align-items: flex-start;
+      .logo-above img {
+        width: 150px;
       }
     }
   </style>
@@ -398,25 +352,23 @@
 
   <div class="page">
 
-    <!-- Brand panel -->
-    <aside class="brand-panel" aria-hidden="true">
-      <div class="brand-logo">
-        <img src="../Tufts_univ_blue_small usage final.png" alt="Tufts University" />
-      </div>
-      <p class="brand-tagline">Single Sign-On</p>
-    </aside>
+    <!-- Logo above card -->
+    <div class="logo-above">
+      <img src="../Tufts_univ_blue_small usage final.png" alt="Tufts University" />
+    </div>
 
-    <!-- Form panel -->
-    <main class="form-panel">
-      <div class="form-inner">
+    <!-- Island card -->
+    <div class="card" role="main">
+      <div class="card-accent" aria-hidden="true"></div>
 
-        <div class="form-heading">
-          <h1>Sign in</h1>
+      <div class="card-body">
+        <div class="card-heading">
+          <h1>Sign In</h1>
           <p>Use your Tufts credentials to continue</p>
         </div>
 
         <div class="error-banner" role="alert" id="error-banner">
-          <svg class="error-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
             <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
           </svg>
           <span id="error-text">Incorrect username or password. Please try again.</span>
@@ -447,12 +399,9 @@
                 required
               />
               <button type="button" class="toggle-pw" id="toggle-pw" aria-label="Show password">
-                <!-- eye icon -->
                 <svg id="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                  <circle cx="12" cy="12" r="3"/>
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
                 </svg>
-                <!-- eye-off icon (hidden initially) -->
                 <svg id="icon-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
                   <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/>
                   <path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/>
@@ -474,28 +423,23 @@
           using services that require single sign-on. Do not bookmark this page —
           navigate to the service you want to use in order to sign in.
         </p>
-
       </div>
-    </main>
+
+      <div class="card-footer">
+        <a href="#">Powered by Shibboleth</a>
+        <span class="sep" aria-hidden="true">·</span>
+        <a href="#">Information Stewardship Policy</a>
+      </div>
+    </div>
+
+    <!-- Below-card help text -->
+    <div class="below-card">
+      <p>Need help? Call <a href="tel:+16176273376">617-627-3376</a> or email <a href="mailto:it@tufts.edu">it@tufts.edu</a></p>
+    </div>
 
   </div>
 
-  <footer>
-    <span class="footer-item">
-      Powered by <a href="#">Shibboleth</a>
-    </span>
-    <span class="footer-sep" aria-hidden="true">·</span>
-    <span class="footer-item">
-      Need help? Call <a href="tel:+16176273376">617-627-3376</a> or email <a href="mailto:it@tufts.edu">it@tufts.edu</a>
-    </span>
-    <span class="footer-sep" aria-hidden="true">·</span>
-    <span class="footer-item">
-      <a href="#">Information Stewardship Policy</a>
-    </span>
-  </footer>
-
   <script>
-    // Password visibility toggle
     const pwInput   = document.getElementById('password');
     const toggleBtn = document.getElementById('toggle-pw');
     const iconEye   = document.getElementById('icon-eye');
@@ -504,12 +448,11 @@
     toggleBtn.addEventListener('click', () => {
       const show = pwInput.type === 'password';
       pwInput.type = show ? 'text' : 'password';
-      iconEye.style.display = show ? 'none'  : '';
-      iconOff.style.display = show ? ''      : 'none';
+      iconEye.style.display = show ? 'none' : '';
+      iconOff.style.display = show ? ''     : 'none';
       toggleBtn.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
     });
 
-    // Form validation
     document.getElementById('login-form').addEventListener('submit', function (e) {
       e.preventDefault();
       const username  = document.getElementById('username').value.trim();
