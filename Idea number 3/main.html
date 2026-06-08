@@ -16,10 +16,10 @@
 
     :root {
       --blue-dark:    #002E6D;
+      --blue-mid:     #1554A0;
       --blue-digital: #3172AE;
       --blue-hover:   #255E94;
       --white:        #FFFFFF;
-      --page-bg:      #EEF1F6;
       --gray-border:  #D4D8DE;
       --gray-text:    #2C2C2C;
       --muted:        #6B7280;
@@ -29,47 +29,97 @@
 
     body {
       font-family: 'Proxima Nova', Arial, sans-serif;
-      background: var(--page-bg);
-      color: var(--gray-text);
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      /* deep radial: lighter centre fading to near-black edges */
+      background:
+        radial-gradient(ellipse 80% 70% at 50% 40%, #1A5299 0%, #002E6D 60%, #001A42 100%);
+      background-attachment: fixed;
+    }
+
+    /* ── Subtle background grid ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ───────────────────────────────────────
+       LAYOUT
+    ─────────────────────────────────────── */
+    .page {
+      position: relative;
+      z-index: 1;
+      flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 40px 16px;
-      gap: 28px;
+      gap: 0;
     }
 
-    /* ── Logo ── */
-    .logo img {
-      width: 190px;
+    /* ── Logo above card ── */
+    .logo-above {
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .logo-above img {
+      width: 180px;
       max-width: 100%;
+      filter: brightness(0) invert(1);
       display: block;
+      margin: 0 auto;
     }
 
     /* ── Card ── */
     .card {
       width: 100%;
-      max-width: 400px;
+      max-width: 420px;
       background: var(--white);
       border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06), 0 8px 28px rgba(0,0,0,0.10);
-      padding: 36px 36px 28px;
+      box-shadow:
+        0 2px 4px rgba(0,0,0,0.12),
+        0 8px 32px rgba(0,0,0,0.28),
+        0 0 0 1px rgba(255,255,255,0.06);
+      overflow: hidden;
+    }
+
+    /* Coloured top accent */
+    .card-accent {
+      height: 4px;
+      background: linear-gradient(90deg, var(--blue-digital) 0%, #5AA3D8 100%);
+    }
+
+    .card-body {
+      padding: 32px 36px 28px;
     }
 
     /* ── Heading ── */
-    .card h1 {
+    .card-heading {
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .card-heading h1 {
       font-size: 1.375rem;
       font-weight: 700;
       color: var(--blue-dark);
       letter-spacing: -0.01em;
-      margin-bottom: 4px;
     }
 
-    .card .subtitle {
+    .card-heading p {
+      margin-top: 5px;
       font-size: 0.875rem;
       color: var(--muted);
-      margin-bottom: 26px;
     }
 
     /* ── Error banner ── */
@@ -86,7 +136,9 @@
       color: var(--error);
     }
 
-    .error-banner.visible { display: flex; }
+    .error-banner.visible {
+      display: flex;
+    }
 
     .error-banner svg {
       flex-shrink: 0;
@@ -95,7 +147,7 @@
       margin-top: 1px;
     }
 
-    /* ── Form ── */
+    /* ── Form fields ── */
     .form-group {
       margin-bottom: 16px;
     }
@@ -106,6 +158,7 @@
       font-weight: 600;
       color: var(--gray-text);
       margin-bottom: 5px;
+      letter-spacing: 0.01em;
     }
 
     .input-wrap {
@@ -134,8 +187,11 @@
       box-shadow: 0 0 0 3px var(--focus-ring);
     }
 
-    input[type="password"] { padding-right: 42px; }
+    input[type="password"] {
+      padding-right: 42px;
+    }
 
+    /* Password toggle */
     .toggle-pw {
       position: absolute;
       right: 11px;
@@ -151,7 +207,10 @@
       line-height: 0;
     }
 
-    .toggle-pw svg { width: 17px; height: 17px; }
+    .toggle-pw svg {
+      width: 17px;
+      height: 17px;
+    }
 
     .toggle-pw:focus-visible {
       outline: 2px solid var(--blue-digital);
@@ -164,27 +223,27 @@
       display: block;
       width: 100%;
       padding: 11px;
-      margin-top: 6px;
       font-family: inherit;
       font-size: 0.975rem;
       font-weight: 600;
       color: var(--white);
-      background: var(--blue-dark);
+      background: var(--blue-digital);
       border: none;
       border-radius: 6px;
       cursor: pointer;
       letter-spacing: 0.02em;
       transition: background 0.15s, transform 0.1s;
+      margin-top: 4px;
     }
 
-    .btn-signin:hover  { background: #003d91; }
+    .btn-signin:hover  { background: var(--blue-hover); }
     .btn-signin:active { transform: scale(0.99); }
     .btn-signin:focus-visible {
       outline: 3px solid var(--blue-digital);
       outline-offset: 2px;
     }
 
-    /* ── Forgot ── */
+    /* ── Links ── */
     .forgot {
       display: block;
       text-align: center;
@@ -202,17 +261,18 @@
       border-radius: 3px;
     }
 
-    /* ── Security notice ── */
+    /* ── Divider ── */
     .divider {
       border: none;
       border-top: 1px solid #EAEDF0;
       margin: 20px 0;
     }
 
+    /* ── Security notice ── */
     .security-notice {
-      font-size: 0.75rem;
+      font-size: 0.76rem;
       color: var(--muted);
-      line-height: 1.65;
+      line-height: 1.6;
       text-align: center;
     }
 
@@ -221,84 +281,70 @@
       font-weight: 600;
     }
 
-    /* ── Below-card help ── */
-    .help-box {
-      width: 100%;
-      max-width: 400px;
-      background: var(--white);
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06), 0 8px 28px rgba(0,0,0,0.10);
-      padding: 18px 24px;
+    /* ── Card footer ── */
+    .card-footer {
+      border-top: 1px solid #EAEDF0;
+      padding: 14px 36px;
       display: flex;
-      align-items: flex-start;
-      gap: 14px;
-    }
-
-    .help-icon {
-      flex-shrink: 0;
-      width: 36px;
-      height: 36px;
-      background: var(--page-bg);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
       justify-content: center;
-      color: var(--blue-dark);
-    }
-
-    .help-icon svg { width: 18px; height: 18px; }
-
-    .help-text p {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--blue-dark);
-      margin-bottom: 4px;
-      letter-spacing: 0.01em;
-    }
-
-    .help-text .contacts {
-      display: flex;
-      gap: 14px;
+      gap: 20px;
       flex-wrap: wrap;
+      background: #FAFBFC;
     }
 
-    .help-text a {
-      font-size: 0.85rem;
-      color: var(--blue-digital);
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .help-text a:hover { color: var(--blue-hover); text-decoration: underline; }
-
-    /* ── Small footer links ── */
-    .footer-links {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .footer-links a {
-      font-size: 0.73rem;
+    .card-footer a {
+      font-size: 0.775rem;
       color: var(--muted);
       text-decoration: none;
     }
 
-    .footer-links a:hover { color: var(--blue-dark); text-decoration: underline; }
-
-    .footer-links .sep {
-      font-size: 0.73rem;
-      color: var(--gray-border);
+    .card-footer a:hover {
+      color: var(--blue-digital);
+      text-decoration: underline;
     }
 
-    /* ── Responsive ── */
-    @media (max-width: 460px) {
-      body { padding: 32px 14px; gap: 22px; }
+    .card-footer .sep {
+      color: var(--gray-border);
+      font-size: 0.775rem;
+    }
 
-      .card { padding: 26px 22px 22px; }
+    /* ── Below-card help ── */
+    .below-card {
+      margin-top: 20px;
+      text-align: center;
+    }
 
-      .logo img { width: 160px; }
+    .below-card p {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.55);
+    }
+
+    .below-card a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+    }
+
+    .below-card a:hover {
+      color: var(--white);
+      text-decoration: underline;
+    }
+
+    /* ───────────────────────────────────────
+       RESPONSIVE
+    ─────────────────────────────────────── */
+    @media (max-width: 500px) {
+      .card-body {
+        padding: 24px 22px 20px;
+      }
+
+      .card-footer {
+        padding: 12px 22px;
+        gap: 12px;
+      }
+
+      .logo-above img {
+        width: 150px;
+      }
     }
   </style>
 </head>
@@ -308,91 +354,93 @@
     All designs
   </a>
 
-  <div class="logo">
-    <img src="../Tufts_univ_blue_small usage final.png" alt="Tufts University" />
-  </div>
+  <div class="page">
 
-  <div class="card" role="main">
-    <h1>Sign In</h1>
-    <p class="subtitle">Use your Tufts credentials to continue</p>
-
-    <div class="error-banner" role="alert" id="error-banner">
-      <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
-      </svg>
-      <span id="error-text">Incorrect username or password. Please try again.</span>
+    <!-- Logo above card -->
+    <div class="logo-above">
+      <img src="../Tufts_univ_blue_small usage final.png" alt="Tufts University" />
     </div>
 
-    <form id="login-form" novalidate>
-      <div class="form-group">
-        <label for="username">Tufts Username</label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          autocomplete="username"
-          spellcheck="false"
-          autocapitalize="none"
-          required
-        />
-      </div>
+    <!-- Island card -->
+    <div class="card" role="main">
+      <div class="card-accent" aria-hidden="true"></div>
 
-      <div class="form-group">
-        <label for="password">Tufts Password</label>
-        <div class="input-wrap">
-          <input
-            type="password"
-            id="password"
-            name="password"
-            autocomplete="current-password"
-            required
-          />
-          <button type="button" class="toggle-pw" id="toggle-pw" aria-label="Show password">
-            <svg id="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
-            </svg>
-            <svg id="icon-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
-              <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/>
-              <path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/>
-              <line x1="1" y1="1" x2="23" y2="23"/>
-            </svg>
-          </button>
+      <div class="card-body">
+        <div class="card-heading">
+          <h1>Sign In</h1>
+          <p>Use your Tufts credentials to continue</p>
         </div>
+
+        <div class="error-banner" role="alert" id="error-banner">
+          <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
+          </svg>
+          <span id="error-text">Incorrect username or password. Please try again.</span>
+        </div>
+
+        <form id="login-form" novalidate>
+          <div class="form-group">
+            <label for="username">Tufts Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              autocomplete="username"
+              spellcheck="false"
+              autocapitalize="none"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="password">Tufts Password</label>
+            <div class="input-wrap">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                autocomplete="current-password"
+                required
+              />
+              <button type="button" class="toggle-pw" id="toggle-pw" aria-label="Show password">
+                <svg id="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                </svg>
+                <svg id="icon-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+                  <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/>
+                  <path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/>
+                  <line x1="1" y1="1" x2="23" y2="23"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-signin">Sign In</button>
+        </form>
+
+        <a href="#" class="forgot">Forgot your Tufts username or password?</a>
+
+        <hr class="divider" />
+
+        <p class="security-notice">
+          For security reasons, please <strong>quit your browser</strong> when finished
+          using services that require single sign-on. Do not bookmark this page —
+          navigate to the service you want to use in order to sign in.
+        </p>
       </div>
 
-      <button type="submit" class="btn-signin">Sign In</button>
-    </form>
-
-    <a href="#" class="forgot">Forgot your Tufts username or password?</a>
-
-    <hr class="divider" />
-
-    <p class="security-notice">
-      For security reasons, please <strong>quit your browser</strong> when finished
-      using services that require single sign-on. Do not bookmark this page —
-      navigate to the service you want to use in order to sign in.
-    </p>
-  </div>
-
-  <div class="help-box">
-    <div class="help-icon" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.14 1.18 2 2 0 012.12 0h3a2 2 0 012 1.72c.13 1 .37 1.97.72 2.9a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.18-1.18a2 2 0 012.11-.45c.93.35 1.9.59 2.9.72A2 2 0 0122 14.92z"/>
-      </svg>
-    </div>
-    <div class="help-text">
-      <p>Need help? Contact the TTS Service Desk</p>
-      <div class="contacts">
-        <a href="tel:+16176273376">617-627-3376</a>
-        <a href="mailto:it@tufts.edu">it@tufts.edu</a>
+      <div class="card-footer">
+        <a href="#">Powered by Shibboleth</a>
+        <span class="sep" aria-hidden="true">·</span>
+        <a href="#">Information Stewardship Policy</a>
       </div>
     </div>
-  </div>
 
-  <div class="footer-links">
-    <a href="#">Powered by Shibboleth</a>
-    <span class="sep">·</span>
-    <a href="#">Information Stewardship Policy</a>
+    <!-- Below-card help text -->
+    <div class="below-card">
+      <p>Need help? Call <a href="tel:+16176273376">617-627-3376</a> or email <a href="mailto:it@tufts.edu">it@tufts.edu</a></p>
+    </div>
+
   </div>
 
   <script>

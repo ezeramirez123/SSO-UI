@@ -3,278 +3,188 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tufts University — Sign In</title>
-
+  <title>Sign In — Tufts University</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: {
-            sans: ['Proxima Nova', 'Arial', 'sans-serif'],
-          },
           colors: {
-            tufts: {
-              dark:    '#002E6D',
-              mid:     '#1554A0',
-              digital: '#3172AE',
-              hover:   '#255E94',
+            tufts: { dark: '#002E6D', digital: '#3172AE', hover: '#255E94' }
+          },
+          keyframes: {
+            shake: {
+              '0%,100%': { transform: 'translateX(0)' },
+              '15%': { transform: 'translateX(-5px)' },
+              '30%': { transform: 'translateX(5px)' },
+              '45%': { transform: 'translateX(-4px)' },
+              '60%': { transform: 'translateX(4px)' },
+              '75%': { transform: 'translateX(-2px)' },
+              '90%': { transform: 'translateX(2px)' }
             }
-          }
+          },
+          animation: { shake: 'shake 0.45s ease-out' }
         }
       }
     }
   </script>
-
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Proxima+Nova:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #4F91CD; }
+    input:-webkit-autofill { -webkit-box-shadow: 0 0 0 40px #fff inset !important; }
+  </style>
 </head>
-
-<body class="min-h-screen bg-slate-100 font-sans flex flex-col items-center justify-center px-4 py-10 gap-5">
-  <a href="../index.html" style="position:fixed;top:16px;left:16px;z-index:50;display:flex;align-items:center;gap:6px;padding:6px 14px 6px 10px;background:rgba(255,255,255,0.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:9999px;font-size:12px;font-weight:600;color:#002E6D;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.12);border:1px solid rgba(0,0,0,0.07);">
+<body class="min-h-screen">
+  <a href="../index.html" style="position:fixed;top:16px;left:16px;z-index:50;display:flex;align-items:center;gap:6px;padding:6px 14px 6px 10px;background:rgba(255,255,255,0.18);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:9999px;font-size:12px;font-weight:600;color:#fff;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.25);">
     <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
     All designs
   </a>
 
-  <!-- Logo -->
-  <img
-    src="../Tufts_univ_blue_small usage final.png"
-    alt="Tufts University"
-    class="w-40 max-w-full"
-  />
+  <div id="root"></div>
 
-  <!-- Card -->
-  <div
-    class="w-full max-w-sm bg-white rounded-2xl shadow-lg overflow-hidden"
-    role="main"
-    x-data="{
-      step: 1,
-      username: '',
-      password: '',
-      showPassword: false,
-      error: '',
-      loading: false,
+  <script type="text/babel">
+    const { useState } = React;
 
-      continueToPassword() {
-        if (!this.username.trim()) {
-          this.error = 'Please enter your Tufts username.';
-          return;
-        }
-        this.error = '';
-        this.step = 2;
-        this.$nextTick(() => document.getElementById('password').focus());
-      },
-
-      goBack() {
-        this.step = 1;
-        this.password = '';
-        this.error = '';
-        this.$nextTick(() => document.getElementById('username').focus());
-      },
-
-      submit() {
-        if (!this.password) {
-          this.error = 'Please enter your password.';
-          return;
-        }
-        this.error = '';
-        this.loading = true;
-        // SSO authentication logic goes here
-      }
-    }"
-  >
-
-    <!-- Service indicator — always visible -->
-    <div class="px-7 pt-7 pb-0">
-      <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200">
-        <div class="shrink-0 w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center overflow-hidden">
-          <!-- Swap for a real logo: <img src="service-logo.png" alt="" class="w-full h-full object-contain p-1.5" /> -->
-          <span class="text-xs font-bold text-slate-300 leading-none">APP</span>
-        </div>
-        <div class="min-w-0">
-          <p class="text-xs text-slate-400 leading-none mb-0.5">Signing in to</p>
-          <p class="text-sm font-semibold text-slate-700 truncate">Service Name</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Error — always visible when set -->
-    <div class="px-7 pt-4"
-         x-show="error"
-         x-transition:enter="transition ease-out duration-150"
-         x-transition:enter-start="opacity-0 -translate-y-1"
-         x-transition:enter-end="opacity-100 translate-y-0"
-    >
-      <div class="flex items-start gap-2 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-3 py-2.5" role="alert">
-        <svg class="w-4 h-4 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
-        </svg>
-        <span x-text="error"></span>
-      </div>
-    </div>
-
-    <!-- ── Step 1: Username ── -->
-    <div
-      x-show="step === 1"
-      x-transition:enter="transition ease-out duration-200"
-      x-transition:enter-start="opacity-0 translate-x-3"
-      x-transition:enter-end="opacity-100 translate-x-0"
-      x-transition:leave="transition ease-in duration-150"
-      x-transition:leave-start="opacity-100 translate-x-0"
-      x-transition:leave-end="opacity-0 -translate-x-3"
-      class="px-7 pt-6 pb-7"
-    >
-      <h1 class="text-xl font-bold text-tufts-dark tracking-tight">Welcome</h1>
-      <p class="text-sm text-slate-400 mt-1 mb-6">Enter your Tufts username to continue</p>
-
-      <form @submit.prevent="continueToPassword" novalidate class="space-y-5">
-        <div>
-          <label for="username" class="block text-sm font-semibold text-slate-700 mb-1.5">Tufts Username</label>
-          <input
-            id="username"
-            type="text"
-            x-model="username"
-            autocomplete="username"
-            spellcheck="false"
-            autocapitalize="none"
-            class="w-full px-4 py-2.5 text-sm border border-slate-300 rounded-lg outline-none
-                   transition duration-150 focus:border-tufts-digital focus:ring-2 focus:ring-tufts-digital/25"
-          />
-        </div>
-
-        <button
-          type="submit"
-          class="w-full py-2.5 rounded-lg text-white text-sm font-semibold tracking-wide
-                 bg-tufts-dark hover:bg-tufts-mid active:scale-[0.99]
-                 transition duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tufts-digital focus-visible:ring-offset-2"
-        >
-          Continue
-        </button>
-      </form>
-    </div>
-
-    <!-- ── Step 2: Password ── -->
-    <div
-      x-show="step === 2"
-      x-transition:enter="transition ease-out duration-200"
-      x-transition:enter-start="opacity-0 translate-x-3"
-      x-transition:enter-end="opacity-100 translate-x-0"
-      x-transition:leave="transition ease-in duration-150"
-      x-transition:leave-start="opacity-100 translate-x-0"
-      x-transition:leave-end="opacity-0 -translate-x-3"
-      class="px-7 pt-6 pb-7"
-      style="display:none"
-    >
-      <h1 class="text-xl font-bold text-tufts-dark tracking-tight">Welcome back</h1>
-      <p class="text-sm text-slate-400 mt-1 mb-5">Enter your password to sign in</p>
-
-      <!-- Username chip -->
-      <div class="flex items-center justify-between bg-slate-50 border border-slate-200 rounded-lg px-3 py-2.5 mb-5">
-        <div class="flex items-center gap-2.5">
-          <div class="w-7 h-7 rounded-full bg-tufts-dark flex items-center justify-center shrink-0">
-            <span class="text-white text-xs font-bold uppercase" x-text="username.charAt(0) || '?'"></span>
-          </div>
-          <span class="text-sm font-medium text-slate-700 truncate" x-text="username"></span>
-        </div>
-        <button
-          type="button"
-          @click="goBack"
-          class="text-xs font-medium text-tufts-digital hover:text-tufts-hover hover:underline shrink-0 ml-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tufts-digital rounded"
-        >
-          Change
-        </button>
-      </div>
-
-      <form @submit.prevent="submit" novalidate class="space-y-5">
-        <div>
-          <label for="password" class="block text-sm font-semibold text-slate-700 mb-1.5">Tufts Password</label>
-          <div class="relative">
-            <input
-              id="password"
-              :type="showPassword ? 'text' : 'password'"
-              x-model="password"
-              autocomplete="current-password"
-              class="w-full px-4 py-2.5 pr-10 text-sm border border-slate-300 rounded-lg outline-none
-                     transition duration-150 focus:border-tufts-digital focus:ring-2 focus:ring-tufts-digital/25"
-            />
-            <button
-              type="button"
-              @click="showPassword = !showPassword"
-              :aria-label="showPassword ? 'Hide password' : 'Show password'"
-              class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors focus-visible:outline-none"
-            >
-              <svg x-show="!showPassword" class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
-              </svg>
-              <svg x-show="showPassword" class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none">
-                <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/>
-                <path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/>
-                <line x1="1" y1="1" x2="23" y2="23"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        <button
-          type="submit"
-          :disabled="loading"
-          class="w-full py-2.5 rounded-lg text-white text-sm font-semibold tracking-wide
-                 bg-tufts-dark hover:bg-tufts-mid active:scale-[0.99]
-                 transition duration-150 disabled:opacity-60 disabled:cursor-not-allowed
-                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tufts-digital focus-visible:ring-offset-2"
-        >
-          <span x-show="!loading">Sign In</span>
-          <span x-show="loading" class="inline-flex items-center justify-center gap-2" style="display:none">
-            <svg class="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/>
-            </svg>
-            Signing in…
-          </span>
-        </button>
-      </form>
-
-      <a
-        href="#"
-        class="block text-center mt-4 text-sm text-tufts-digital hover:text-tufts-hover hover:underline font-medium focus-visible:outline-none"
-      >
-        Forgot your password?
-      </a>
-    </div>
-
-    <!-- Security notice + footer -->
-    <div class="border-t border-slate-100">
-      <p class="text-xs text-slate-400 text-center leading-relaxed px-7 py-4">
-        Please <strong class="text-slate-500 font-semibold">quit your browser</strong> when finished.
-        Do not bookmark this page.
-      </p>
-      <div class="bg-slate-50 border-t border-slate-100 px-7 py-3 flex justify-center gap-4 flex-wrap">
-        <a href="#" class="text-xs text-slate-400 hover:text-tufts-dark hover:underline">Powered by Shibboleth</a>
-        <span class="text-slate-200 text-xs select-none">·</span>
-        <a href="#" class="text-xs text-slate-400 hover:text-tufts-dark hover:underline">Stewardship Policy</a>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Help -->
-  <div class="w-full max-w-sm bg-white rounded-2xl shadow-lg px-6 py-4 flex items-center gap-4">
-    <div class="shrink-0 w-9 h-9 rounded-xl bg-tufts-dark flex items-center justify-center">
-      <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.14 1.18 2 2 0 012.12 0h3a2 2 0 012 1.72c.13 1 .37 1.97.72 2.9a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.18-1.18a2 2 0 012.11-.45c.93.35 1.9.59 2.9.72A2 2 0 0122 14.92z"/>
+    const EyeIcon = () => (
+      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
       </svg>
-    </div>
-    <div>
-      <p class="text-xs font-semibold text-tufts-dark uppercase tracking-wide mb-1">Need help? TTS Service Desk</p>
-      <div class="flex gap-4 flex-wrap">
-        <a href="tel:+16176273376" class="text-sm font-medium text-tufts-digital hover:text-tufts-hover hover:underline">617-627-3376</a>
-        <a href="mailto:it@tufts.edu"  class="text-sm font-medium text-tufts-digital hover:text-tufts-hover hover:underline">it@tufts.edu</a>
-      </div>
-    </div>
-  </div>
+    );
 
+    const EyeOffIcon = () => (
+      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+      </svg>
+    );
+
+    function App() {
+      const [username, setUsername] = useState('');
+      const [password, setPassword] = useState('');
+      const [showPw,   setShowPw]   = useState(false);
+      const [error,    setError]    = useState('');
+      const [errKey,   setErrKey]   = useState(0);
+      const [loading,  setLoading]  = useState(false);
+
+      function triggerErr(msg) { setError(msg); setErrKey(k => k + 1); }
+
+      function handleSubmit(e) {
+        e.preventDefault();
+        if (!username.trim()) { triggerErr('Please enter your Tufts username.'); return; }
+        if (!password)        { triggerErr('Please enter your password.'); return; }
+        setError(''); setLoading(true);
+      }
+
+      return (
+        <div className="min-h-screen flex items-center justify-center p-4" style={{ background: '#4F91CD' }}>
+          <div className="w-full max-w-sm">
+
+            {/* Card */}
+            <div className="bg-white rounded-2xl overflow-hidden shadow-[0_32px_80px_rgba(0,0,0,0.5)]">
+
+              {/* Digital Blue top stripe */}
+              <div className="h-1.5 bg-tufts-digital" />
+
+              <div className="p-8">
+
+                {/* Logo + heading inline */}
+                <div className="flex items-center gap-3 mb-7">
+                  <img
+                    src="../Tufts_univ_blue_small usage final.png"
+                    alt="Tufts University"
+                    className="h-7 shrink-0"
+                  />
+                  <div className="w-px h-5 bg-slate-200 shrink-0" />
+                  <span className="text-sm font-semibold text-slate-500 tracking-wide">Single Sign-On</span>
+                </div>
+
+                {/* Service indicator */}
+                <div className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200 mb-6">
+                  <div className="shrink-0 w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center overflow-hidden">
+                    <span className="text-xs font-bold text-slate-300">APP</span>
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-xs text-slate-400 leading-none mb-1">Signing in to</p>
+                    <p className="text-sm font-semibold text-slate-700 truncate">Service Name</p>
+                  </div>
+                </div>
+
+                <h1 className="text-xl font-bold text-slate-800 mb-1">Welcome back</h1>
+                <p className="text-sm text-slate-400 mb-6">Enter your credentials to continue.</p>
+
+                {error && (
+                  <div key={errKey}
+                    className="flex items-start gap-2.5 p-3 rounded-lg bg-red-50 border border-red-200 text-sm text-red-700 mb-5 animate-shake"
+                    role="alert">
+                    <svg className="w-4 h-4 mt-0.5 shrink-0 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                    </svg>
+                    {error}
+                  </div>
+                )}
+
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <label htmlFor="username" className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Tufts Username</label>
+                    <input id="username" type="text" placeholder="e.g. jsmith01"
+                      value={username} autoFocus autoComplete="username"
+                      onChange={e => { setUsername(e.target.value); setError(''); }}
+                      className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 bg-white text-slate-800 placeholder-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-tufts-digital focus:border-transparent transition"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="password" className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Password</label>
+                    <div className="relative">
+                      <input id="password" type={showPw ? 'text' : 'password'} placeholder="••••••••"
+                        value={password} autoComplete="current-password"
+                        onChange={e => { setPassword(e.target.value); setError(''); }}
+                        className="w-full px-3.5 py-2.5 pr-10 rounded-lg border border-slate-300 bg-white text-slate-800 placeholder-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-tufts-digital focus:border-transparent transition"
+                      />
+                      <button type="button" onClick={() => setShowPw(s => !s)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                        aria-label={showPw ? 'Hide password' : 'Show password'}>
+                        {showPw ? <EyeOffIcon /> : <EyeIcon />}
+                      </button>
+                    </div>
+                  </div>
+
+                  <button type="submit" disabled={loading}
+                    className="w-full py-2.5 rounded-lg bg-tufts-dark text-white text-sm font-semibold hover:bg-tufts-hover transition-colors active:scale-[0.99] disabled:opacity-60 flex items-center justify-center gap-2">
+                    {loading ? (
+                      <>
+                        <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                        </svg>
+                        Signing in…
+                      </>
+                    ) : 'Sign In'}
+                  </button>
+                </form>
+
+                {/* Help inside card */}
+                <div className="mt-6 pt-5 border-t border-slate-100 text-center">
+                  <p className="text-xs text-slate-400">
+                    Need help?{' '}
+                    <a href="tel:+16176272000" className="text-tufts-digital hover:underline">617-627-2000</a>
+                    {' · '}
+                    <a href="https://it.tufts.edu" className="text-tufts-digital hover:underline">it.tufts.edu</a>
+                  </p>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
 </body>
 </html>

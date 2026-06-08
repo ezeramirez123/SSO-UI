@@ -1,3 +1,3 @@
-# Idea 2 — Centered Island (Dark Background)
+# Idea 4 — Tailwind + Alpine (Light)
 
-Full-page Tufts Dark Blue background with a radial gradient. Tufts logo floats above a centered white card. Shibboleth and policy links sit inside the card footer. Plain HTML + CSS, no dependencies.
+Centered card on a slate background. Built with **Tailwind CSS** (CDN) and **Alpine.js** (CDN) — no build step required. Alpine handles password show/hide, animated error banner, and loading state on submit. Labels use uppercase small-caps styling.

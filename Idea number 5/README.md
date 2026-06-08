@@ -1,3 +1,3 @@
-# Idea 5 — Tailwind + Alpine (Dark)
+# Idea 6 — Tailwind + Alpine (Split, No Card)
 
-Full Tufts Dark Blue page. White card floats on the dark background; logo is inverted to white via Tailwind's `filter brightness-0 invert` classes. Help section uses a frosted glass panel (`backdrop-blur`, `bg-white/10`) instead of a solid card. Built with **Tailwind CSS** + **Alpine.js**, no build step.
+Full-screen split: Tufts Dark Blue left panel with the logo, white right panel with the form sitting directly on the surface — no card wrapper. Includes a service indicator slot at the top of the form area to show which app the user is signing into. Stacks vertically on mobile. Built with **Tailwind CSS** + **Alpine.js**, no build step.

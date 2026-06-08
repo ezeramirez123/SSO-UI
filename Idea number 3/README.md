@@ -1,3 +1,3 @@
-# Idea 3 — Minimal Card
+# Idea 2 — Centered Island (Dark Background)
 
-Light blue-tinted background with the Tufts logo in its natural blue above a plain white card. No decorative elements — spacing and typography do the work. Help info in a second card below. Plain HTML + CSS, no dependencies.
+Full-page Tufts Dark Blue background with a radial gradient. Tufts logo floats above a centered white card. Shibboleth and policy links sit inside the card footer. Plain HTML + CSS, no dependencies.

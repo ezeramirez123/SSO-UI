@@ -1,3 +1,3 @@
-# Idea 1 — Split Panel
+# Idea 3 — Minimal Card
 
-Split-screen layout: Tufts Dark Blue brand panel on the left with the logo, login form on the right. Stacks vertically on mobile and portrait iPad (breakpoint: 900px). Plain HTML + CSS, no dependencies.
+Light blue-tinted background with the Tufts logo in its natural blue above a plain white card. No decorative elements — spacing and typography do the work. Help info in a second card below. Plain HTML + CSS, no dependencies.

@@ -1,3 +1,3 @@
-# Idea 4 — Tailwind + Alpine (Light)
+# Idea 1 — Split Panel
 
-Centered card on a slate background. Built with **Tailwind CSS** (CDN) and **Alpine.js** (CDN) — no build step required. Alpine handles password show/hide, animated error banner, and loading state on submit. Labels use uppercase small-caps styling.
+Split-screen layout: Tufts Dark Blue brand panel on the left with the logo, login form on the right. Stacks vertically on mobile and portrait iPad (breakpoint: 900px). Plain HTML + CSS, no dependencies.
